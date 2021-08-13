@@ -1,0 +1,28 @@
+---
+title: "Runoff Volumes"
+author: "Desik Somasundaram"
+date: "8/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+source(here("src", "storm_runoff.R"))
+```
+
+```{r}
+imperv_frac <- seq(from = 0.6, to = 0.8, by = 0.01)
+runoff_vol_out <- predict_runoff(imperv_frac, 182)
+runoff_df <- data.frame(imperv_frac, runoff_vol_out)
+```
+
+```{r}
+runoff_plot <- ggplot(data = runoff_df, aes(x = imperv_frac, y = runoff_vol_out)) +
+  geom_point() + geom_line() + labs(title = "Watershed Impervious Area Fraction vs. Runoff Volume") + xlab("Watershed Impervious Area Fraction") + ylab("Runoff Volume (ft^3)")
+
+ggsave(here("figs", "runoff_plot.png"), runoff_plot)
+
+```
+
