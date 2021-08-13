@@ -57,11 +57,9 @@ ggsave(here("figs", "yearly_tilapia_tot_plot.png"), yearly_tilapia_tot_plot)
 countries_subset <- c("Ecuador", "Honduras", "Costa Rica", "Mexico")
 
 subset_yearly_tilapia_tot <- reshaped_us_til_imports %>% 
-  dplyr::filter(country %in% countries_subset) %>% 
-  dplyr::group_by(year) %>% 
-  summarize(value = sum(value, na.rm = TRUE))
+  dplyr::filter(country %in% countries_subset) 
 
-subset_yearly_tilapia_tot_plot <- ggplot(data = subset_yearly_tilapia_tot, aes(x = year, y = value)) + geom_line() + labs(title = "US Tilapia Imports by Year from Ecuador, Honduras, Costa Rica and Mexico") + xlab("Year") + ylab("Tilapia Imports Total Weights (in thousands of pounds)")
+subset_yearly_tilapia_tot_plot <- ggplot(data = subset_yearly_tilapia_tot, aes(x = year, y = value, color = country)) + geom_line() + labs(title = "US Tilapia Imports by Year from Ecuador, Honduras, Costa Rica and Mexico") + xlab("Year") + ylab("Tilapia Imports Total Weights (in thousands of pounds)") + theme_light()
 
 subset_yearly_tilapia_tot_plot
 
